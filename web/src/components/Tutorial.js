@@ -1,80 +1,78 @@
-import React, { useState, useEffect, ChangeEvent } from "react";
-import { useParams, useNavigate } from 'react-router-dom';
-
+import React, { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { updateTutorial, deleteTutorial } from "../slices/tutorials";
 import TutorialDataService from "../services/TutorialService";
-import ITutorialData from "../types/Tutorial";
 
-const Tutorial: React.FC = () => {
-  const { id }= useParams();
-  let navigate = useNavigate();
-
+const Tutorial = (props) => {
   const initialTutorialState = {
     id: null,
     title: "",
     description: "",
     published: false
   };
-  const [currentTutorial, setCurrentTutorial] = useState<ITutorialData>(initialTutorialState);
-  const [message, setMessage] = useState<string>("");
+  const [currentTutorial, setCurrentTutorial] = useState(initialTutorialState);
+  const [message, setMessage] = useState("");
 
-  const getTutorial = (id: string) => {
+  const dispatch = useDispatch();
+
+  const getTutorial = id => {
     TutorialDataService.get(id)
-      .then((response: any) => {
+      .then(response => {
         setCurrentTutorial(response.data);
-        console.log(response.data);
       })
-      .catch((e: Error) => {
+      .catch(e => {
         console.log(e);
       });
   };
 
   useEffect(() => {
-    if (id)
-      getTutorial(id);
-  }, [id]);
+    getTutorial(props.match.params.id);
+  }, [props.match.params.id]);
 
-  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = event => {
     const { name, value } = event.target;
     setCurrentTutorial({ ...currentTutorial, [name]: value });
   };
 
-  const updatePublished = (status: boolean) => {
-    var data = {
+  const updateStatus = status => {
+    const data = {
       id: currentTutorial.id,
       title: currentTutorial.title,
       description: currentTutorial.description,
       published: status
     };
 
-    TutorialDataService.update(currentTutorial.id, data)
-      .then((response: any) => {
-        console.log(response.data);
+    dispatch(updateTutorial({ id: currentTutorial.id, data }))
+      .unwrap()
+      .then(response => {
+        console.log(response);
         setCurrentTutorial({ ...currentTutorial, published: status });
         setMessage("The status was updated successfully!");
       })
-      .catch((e: Error) => {
+      .catch(e => {
         console.log(e);
       });
   };
 
-  const updateTutorial = () => {
-    TutorialDataService.update(currentTutorial.id, currentTutorial)
-      .then((response: any) => {
-        console.log(response.data);
+  const updateContent = () => {
+    dispatch(updateTutorial({ id: currentTutorial.id, data: currentTutorial }))
+      .unwrap()
+      .then(response => {
+        console.log(response);
         setMessage("The tutorial was updated successfully!");
       })
-      .catch((e: Error) => {
+      .catch(e => {
         console.log(e);
       });
   };
 
-  const deleteTutorial = () => {
-    TutorialDataService.remove(currentTutorial.id)
-      .then((response: any) => {
-        console.log(response.data);
-        navigate("/tutorials");
+  const removeTutorial = () => {
+    dispatch(deleteTutorial({ id: currentTutorial.id }))
+      .unwrap()
+      .then(() => {
+        props.history.push("/tutorials");
       })
-      .catch((e: Error) => {
+      .catch(e => {
         console.log(e);
       });
   };
@@ -119,27 +117,27 @@ const Tutorial: React.FC = () => {
           {currentTutorial.published ? (
             <button
               className="badge badge-primary mr-2"
-              onClick={() => updatePublished(false)}
+              onClick={() => updateStatus(false)}
             >
               UnPublish
             </button>
           ) : (
             <button
               className="badge badge-primary mr-2"
-              onClick={() => updatePublished(true)}
+              onClick={() => updateStatus(true)}
             >
               Publish
             </button>
           )}
 
-          <button className="badge badge-danger mr-2" onClick={deleteTutorial}>
+          <button className="badge badge-danger mr-2" onClick={removeTutorial}>
             Delete
           </button>
 
           <button
             type="submit"
             className="badge badge-success"
-            onClick={updateTutorial}
+            onClick={updateContent}
           >
             Update
           </button>

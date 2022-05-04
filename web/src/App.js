@@ -1,5 +1,5 @@
 import React from "react";
-import { Routes, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
@@ -7,9 +7,9 @@ import AddTutorial from "./components/AddTutorial";
 import Tutorial from "./components/Tutorial";
 import TutorialsList from "./components/TutorialsList";
 
-const App: React.FC = () => {
+function App() {
   return (
-    <div>
+    <Router>
       <nav className="navbar navbar-expand navbar-dark bg-dark">
         <a href="/tutorials" className="navbar-brand">
           Inicio
@@ -25,18 +25,19 @@ const App: React.FC = () => {
               Adicionar
             </Link>
           </li>
+          
         </div>
+        
       </nav>
 
       <div className="container mt-3">
-        <Routes>
-          <Route path="/" element={<TutorialsList/>} />
-          <Route path="/tutorials" element={<TutorialsList/>} />
-          <Route path="/add" element={<AddTutorial/>} />
-          <Route path="/tutorials/:id" element={<Tutorial/>} />
-        </Routes>
+        <Switch>
+          <Route exact path={["/", "/tutorials"]} component={TutorialsList} />
+          <Route exact path="/add" component={AddTutorial} />
+          <Route path="/tutorials/:id" component={Tutorial} />
+        </Switch>
       </div>
-    </div>
+    </Router>
   );
 }
 

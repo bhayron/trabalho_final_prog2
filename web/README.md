@@ -1,18 +1,22 @@
-# React Typescript with API call example using Hooks and Axios
-Build a React Typescript CRUD Application to consume Web API with Hooks and Axios, display and modify data with Router & Bootstrap.
-- Each Tutorial has id, title, description, published status.
-- We can create, retrieve, update, delete Tutorials.
-- There is a Search bar for finding Tutorials by title.
+# Redux-Toolkit CRUD example with React Hooks, Axios & Web API
+Build Redux-Toolkit CRUD application with React Hooks and Rest API calls in that:
+- Each item has id, title, description, published status.
+- We can create, retrieve, update, delete items.
+- There is a Search bar for finding items by title.
 
-![react-typescript-api-call-example](react-typescript-api-call-example.png)
+![redux-toolkit-crud-hooks-example](redux-toolkit-crud-hooks-example.png)
+
+Redux Store:
+
+![redux-toolkit-crud-hooks-example-redux-store-architecture](redux-toolkit-crud-hooks-example-redux-store-architecture.png)
 
 For instruction, please visit:
-> [React Typescript with API call example using Hooks and Axios](https://www.bezkoder.com/react-typescript-api-call/)
+> [Redux-Toolkit CRUD example with React Hooks, Axios & Web API](https://www.bezkoder.com/redux-toolkit-crud-react-hooks/)
 
 More Practice:
-> [React Typescript (Components) with Axios and API call example ](https://www.bezkoder.com/react-typescript-axios/)
+> [React Hooks + Redux (without Redux-Toolkit) CRUD example with Axios & Web API](https://www.bezkoder.com/react-hooks-redux-crud/)
 
-> [(Javascript) React Hooks CRUD example with Axios and Web API](https://www.bezkoder.com/react-hooks-crud-axios-api/)
+> [React Hooks (without Redux) CRUD example with Axios and Web API](https://www.bezkoder.com/react-hooks-crud-axios-api/)
 
 > [React Table example: CRUD App with react-table v7](https://www.bezkoder.com/react-table-example-hooks-crud/)
 
@@ -24,12 +28,12 @@ More Practice:
 
 > [React + Redux + Hooks: JWT Authentication & Authorization example](https://www.bezkoder.com/react-hooks-redux-login-registration-example/)
 
-Fullstack with Node Express:
-> [React + Node Express + MySQL](https://www.bezkoder.com/react-node-express-mysql/)
+Fullstack with Node.js Express:
+> [React + Node.js Express + MySQL](https://www.bezkoder.com/react-node-express-mysql/)
 
-> [React + Node Express + PostgreSQL](https://www.bezkoder.com/react-node-express-postgresql/)
+> [React + Node.js Express + PostgreSQL](https://www.bezkoder.com/react-node-express-postgresql/)
 
-> [React + Node Express + MongoDB](https://www.bezkoder.com/react-node-express-mongodb-mern-stack/)
+> [React + Node.js Express + MongoDB](https://www.bezkoder.com/react-node-express-mongodb-mern-stack/)
 
 Fullstack with Spring Boot:
 > [React + Spring Boot + MySQL](https://www.bezkoder.com/react-spring-boot-crud/)
@@ -39,7 +43,7 @@ Fullstack with Spring Boot:
 > [React + Spring Boot + MongoDB](https://www.bezkoder.com/react-spring-boot-mongodb/)
 
 Fullstack with Django:
-> [React Hooks + Django Rest Framework](https://www.bezkoder.com/django-react-hooks/)
+> [React.js Hooks + Django Rest Framework](https://www.bezkoder.com/django-react-hooks/)
 
 Serverless with Firebase:
 > [React Firebase Hooks: CRUD App with Realtime Database example](https://www.bezkoder.com/react-firebase-hooks-crud/)

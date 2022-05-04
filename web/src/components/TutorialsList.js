@@ -1,57 +1,56 @@
-import React, { useState, useEffect, ChangeEvent } from "react";
-import TutorialDataService from "../services/TutorialService";
+import React, { useState, useEffect, useCallback } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  retrieveTutorials,
+  findTutorialsByTitle,
+  deleteAllTutorials,
+} from "../slices/tutorials";
 import { Link } from "react-router-dom";
-import ITutorialData from '../types/Tutorial';
 
-const TutorialsList: React.FC = () => {
-  const [tutorials, setTutorials] = useState<Array<ITutorialData>>([]);
-  const [currentTutorial, setCurrentTutorial] = useState<ITutorialData | null>(null);
-  const [currentIndex, setCurrentIndex] = useState<number>(-1);
-  const [searchTitle, setSearchTitle] = useState<string>("");
+const TutorialsList = () => {
+  const [currentTutorial, setCurrentTutorial] = useState(null);
+  const [currentIndex, setCurrentIndex] = useState(-1);
+  const [searchTitle, setSearchTitle] = useState("");
 
-  useEffect(() => {
-    retrieveTutorials();
-  }, []);
+  const tutorials = useSelector(state => state.tutorials);
+  const dispatch = useDispatch();
 
-  const onChangeSearchTitle = (e: ChangeEvent<HTMLInputElement>) => {
+  const onChangeSearchTitle = e => {
     const searchTitle = e.target.value;
     setSearchTitle(searchTitle);
   };
 
-  const retrieveTutorials = () => {
-    TutorialDataService.getAll()
-      .then((response: any) => {
-        setTutorials(response.data);
-        console.log(response.data);
-      })
-      .catch((e: Error) => {
-        console.log(e);
-      });
-  };
+  const initFetch = useCallback(() => {
+    dispatch(retrieveTutorials());
+  }, [dispatch])
 
-  const refreshList = () => {
-    retrieveTutorials();
+  useEffect(() => {
+    initFetch()
+  }, [initFetch])
+
+  const refreshData = () => {
     setCurrentTutorial(null);
     setCurrentIndex(-1);
   };
 
-  const setActiveTutorial = (tutorial: ITutorialData, index: number) => {
+  const setActiveTutorial = (tutorial, index) => {
     setCurrentTutorial(tutorial);
     setCurrentIndex(index);
   };
 
-
-  const findByTitle = () => {
-    TutorialDataService.findByTitle(searchTitle)
-      .then((response: any) => {
-        setTutorials(response.data);
-        setCurrentTutorial(null);
-        setCurrentIndex(-1);
-        console.log(response.data);
+  const removeAllTutorials = () => {
+    dispatch(deleteAllTutorials())
+      .then(response => {
+        refreshData();
       })
-      .catch((e: Error) => {
+      .catch(e => {
         console.log(e);
       });
+  };
+
+  const findByTitle = () => {
+    refreshData();
+    dispatch(findTutorialsByTitle({ title: searchTitle }));
   };
 
   return (
@@ -61,7 +60,7 @@ const TutorialsList: React.FC = () => {
           <input
             type="text"
             className="form-control"
-            placeholder="Pesquisar"
+            placeholder="Search by title"
             value={searchTitle}
             onChange={onChangeSearchTitle}
           />
@@ -71,7 +70,7 @@ const TutorialsList: React.FC = () => {
               type="button"
               onClick={findByTitle}
             >
-              Pesquisar
+              Search
             </button>
           </div>
         </div>
@@ -93,7 +92,13 @@ const TutorialsList: React.FC = () => {
               </li>
             ))}
         </ul>
-      
+
+        <button
+          className="m-3 btn btn-sm btn-danger"
+          onClick={removeAllTutorials}
+        >
+          Remove All
+        </button>
       </div>
       <div className="col-md-6">
         {currentTutorial ? (
@@ -122,7 +127,7 @@ const TutorialsList: React.FC = () => {
               to={"/tutorials/" + currentTutorial.id}
               className="badge badge-warning"
             >
-              Editar
+              Edit
             </Link>
           </div>
         ) : (
