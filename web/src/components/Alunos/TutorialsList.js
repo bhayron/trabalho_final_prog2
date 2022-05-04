@@ -4,10 +4,10 @@ import {
   retrieveTutorials,
   findTutorialsByTitle,
   deleteAllTutorials,
-} from "../slices/tutorials";
+} from "../../slices/aluno";
 import { Link } from "react-router-dom";
 
-const TutorialsList = () => {
+const AlunosList = () => {
   const [currentTutorial, setCurrentTutorial] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(-1);
   const [searchTitle, setSearchTitle] = useState("");
@@ -50,7 +50,7 @@ const TutorialsList = () => {
 
   const findByTitle = () => {
     refreshData();
-    dispatch(findTutorialsByTitle({ title: searchTitle }));
+    dispatch(findTutorialsByTitle({ nome: searchTitle }));
   };
 
   return (
@@ -88,17 +88,20 @@ const TutorialsList = () => {
                 onClick={() => setActiveTutorial(tutorial, index)}
                 key={index}
               >
-                {tutorial.title}
+                {tutorial.nome}
               </li>
             ))}
         </ul>
 
-        <button
-          className="m-3 btn btn-sm btn-success"
-          onClick={removeAllTutorials}
+        
+           <Link to={"/adicionar/aluno"} className="nav-link">
+           <button
+          className="m-3 btn btn-sm btn-success"         
         >
-          Adicionar
-        </button>
+              Adicionar
+              </button>
+            </Link>
+       
       </div>
       <div className="col-md-6">
         {currentTutorial ? (
@@ -108,13 +111,13 @@ const TutorialsList = () => {
               <label>
                 <strong>Title:</strong>
               </label>{" "}
-              {currentTutorial.title}
+              {currentTutorial.nome}
             </div>
             <div>
               <label>
                 <strong>Description:</strong>
               </label>{" "}
-              {currentTutorial.description}
+              {currentTutorial.curso}
             </div>
             <div>
               <label>
@@ -127,7 +130,7 @@ const TutorialsList = () => {
               to={"/tutorials/" + currentTutorial.id}
               className="badge badge-warning"
             >
-              Edit
+              Editar
             </Link>
           </div>
         ) : (
@@ -141,4 +144,4 @@ const TutorialsList = () => {
   );
 };
 
-export default TutorialsList;
+export default AlunosList;
