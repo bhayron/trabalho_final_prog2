@@ -29,7 +29,7 @@ public class Emprestimo {
 
 	}
 
-	public Emprestimo(String aluno, String livro,String dataEmprestimo, String dataDevolucao, boolean published) {
+	public Emprestimo(String aluno, String livro, String dataEmprestimo, String dataDevolucao, boolean published) {
 		this.aluno = aluno;
 		this.livro = livro;
 		this.dataEmprestimo = dataEmprestimo;
@@ -41,21 +41,38 @@ public class Emprestimo {
 		return id;
 	}
 
-	public String getEmprestimo() {
+	public String getAluno() {
 		return aluno;
 	}
 
-	public void setEmorestimo(String aluno) {
+	public void setAluno(String aluno) {
 		this.aluno = aluno;
 	}
 
-	public String getEmorestimo() {
+	public String getLivro() {
 		return livro;
 	}
 
-	public void setlivro(String livro) {
+	public void setLivro(String livro) {
 		this.livro = livro;
 	}
+
+	public String getDataEmprestimo() {
+		return dataEmprestimo;
+	}
+
+	public void setDataEmprestimo(String dataEmprestimo) {
+		this.dataEmprestimo = dataEmprestimo;
+	}
+
+	public String getDataDevolucao() {
+		return dataDevolucao;
+	}
+
+	public void setDataDevolucao(String dataDevolucao) {
+		this.dataDevolucao = dataDevolucao;
+	}
+
 
 	public boolean isPublished() {
 		return published;
@@ -67,7 +84,7 @@ public class Emprestimo {
 
 	@Override
 	public String toString() {
-		return "Tutorial [id=" + id + ", aluno=" + aluno + ", desc=" + livro + ", published=" + published + "]";
+		return "Tutorial [id=" + id + ", aluno=" + aluno + ", desc=" + livro + ", published=" + published + ",livro=" + livro + ", dataEmprestimo=" + dataEmprestimo + ", dataDevolucao=" + dataDevolucao + "]";
 	}
 
 }
