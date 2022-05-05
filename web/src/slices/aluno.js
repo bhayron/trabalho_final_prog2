@@ -19,7 +19,7 @@ export const retrieveTutorials = createAsyncThunk(
   }
 );
 
-export const updateTutorial = createAsyncThunk(
+export const updateAluno = createAsyncThunk(
   "tutorials/update",
   async ({ id, data }) => {
     const res = await TutorialDataService.update(id, data);
@@ -27,7 +27,7 @@ export const updateTutorial = createAsyncThunk(
   }
 );
 
-export const deleteTutorial = createAsyncThunk(
+export const deleteAluno = createAsyncThunk(
   "tutorials/delete",
   async ({ id }) => {
     await TutorialDataService.remove(id);
@@ -45,8 +45,8 @@ export const deleteAllTutorials = createAsyncThunk(
 
 export const findTutorialsByTitle = createAsyncThunk(
   "tutorials/findByTitle",
-  async ({ title }) => {
-    const res = await TutorialDataService.findByTitle(title);
+  async ({ nome }) => {
+    const res = await TutorialDataService.findByTitle(nome);
     return res.data;
   }
 );
@@ -61,14 +61,14 @@ const tutorialSlice = createSlice({
     [retrieveTutorials.fulfilled]: (state, action) => {
       return [...action.payload];
     },
-    [updateTutorial.fulfilled]: (state, action) => {
+    [updateAluno.fulfilled]: (state, action) => {
       const index = state.findIndex(tutorial => tutorial.id === action.payload.id);
       state[index] = {
         ...state[index],
         ...action.payload,
       };
     },
-    [deleteTutorial.fulfilled]: (state, action) => {
+    [deleteAluno.fulfilled]: (state, action) => {
       let index = state.findIndex(({ id }) => id === action.payload.id);
       state.splice(index, 1);
     },

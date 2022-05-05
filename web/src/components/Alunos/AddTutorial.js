@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { createAluno } from "../../slices/aluno";
+import Swal from 'sweetalert2'
+import { Link } from "react-router-dom";
 
 const AddAluno = () => {
   const initialTutorialState = {
@@ -21,45 +23,43 @@ const AddAluno = () => {
     setTutorial({ ...tutorial, [name]: value });
   };
 
-  const options = [
-    {
-      label: "Apple",
-      value: "apple",
-    },
-    {
-      label: "Mango",
-      value: "mango",
-    },
-    {
-      label: "Banana",
-      value: "banana",
-    },
-    {
-      label: "Pineapple",
-      value: "pineapple",
-    },
-  ];
 
   const saveTutorial = () => {
     const { nome, curso, teste, select } = tutorial;
     console.log(nome, curso, teste);
+ 
+Swal.fire({
+  title: 'Voce deseja realmente adicionar um novo aluno?',
+  showDenyButton: true,
+  showCancelButton: true,
+  confirmButtonText: 'Sim',
+  denyButtonText: `Nao`,
+}).then((result) => {
+  /* Read more about isConfirmed, isDenied below */
+  if (result.isConfirmed) {
+    Swal.fire('Aluno salvo com sucesso!', '', 'success')
     dispatch(createAluno({ nome, curso, teste, select }))
-      .unwrap()
-      .then(data => {
-        console.log(data);
-        setTutorial({
-          id: data.id,
-          nome: data.nome,
-          curso: data.curso,
-          published: data.published,
-          teste: data.teste,
-          select: data.select
-        });
-        setSubmitted(true);
-      })
-      .catch(e => {
-        console.log(e);
+    .unwrap()
+    .then(data => {
+      console.log(data);
+      setTutorial({
+        id: data.id,
+        nome: data.nome,
+        curso: data.curso,
+        published: data.published,
+        teste: data.teste,
+        select: data.select
       });
+      setSubmitted(true);
+    })
+    .catch(e => {
+      console.log(e);
+    });
+  } else if (result.isDenied) {
+    Swal.fire('Aluno nao salvo', '', 'info')
+  }
+})
+  
   };
 
   const newTutorial = () => {
@@ -71,15 +71,24 @@ const AddAluno = () => {
     <div className="submit-form">
       {submitted ? (
         <div>
-          <h4>You submitted successfully!</h4>
-          <button className="btn btn-success" onClick={newTutorial}>
-            Add
+          <h4>Aluno adicionado com sucesso</h4>
+          <button className="btn btn-warning" onClick={newTutorial}>
+            Adicionar novo
           </button>
+      {' '}
+          <Link
+              to={"/alunos"}
+              
+            >
+          <button className="btn btn-wraning" onClick={newTutorial}>
+            Voltar a listagem
+          </button>
+          </Link>
         </div>
       ) : (
         <div>
           <div className="form-group">
-            <label htmlFor="nome">nome</label>
+            <label htmlFor="nome">Nome</label>
             <input
               type="text"
               className="form-control"
@@ -92,7 +101,7 @@ const AddAluno = () => {
           </div>
 
           <div className="form-group">
-            <label htmlFor="curso">curso</label>
+            <label htmlFor="curso">Curso</label>
             <input
               type="text"
               className="form-control"
@@ -102,37 +111,10 @@ const AddAluno = () => {
               onChange={handleInputChange}
               name="curso"
             />
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="curso">Teste</label>
-            <input
-              type="text"
-              className="form-control"
-              id="teste"
-              required
-              value={tutorial.teste || ''}
-              onChange={handleInputChange}
-              name="teste"
-            />
-          </div>
-
-          <div className="form-group">
-          <select 
-            id="select"  
-            name="select"
-            onChange={handleInputChange}
-            class="form-select form-select-lg mb-3"
-          >
-            <option selected>Open this select menu</option>
-            {options.map((option) => (
-              <option value={option.value}>{option.label}</option>
-            ))}
-          </select>
-          </div>
+          </div>      
 
           <button onClick={saveTutorial} className="btn btn-success">
-            Submit
+            Salvar
           </button>
         </div>
       )}

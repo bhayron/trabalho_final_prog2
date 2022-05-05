@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { updateTutorial, deleteTutorial } from "../../slices/tutorials";
-import TutorialDataService from "../../services/TutorialService";
+import { updateAluno, deleteAluno } from "../../slices/aluno";
+import AlunoDataService from "../../services/AlunoService";
+import Swal from 'sweetalert2'
 
 const Aluno = (props) => {
   const initialTutorialState = {
@@ -16,7 +17,7 @@ const Aluno = (props) => {
   const dispatch = useDispatch();
 
   const getTutorial = id => {
-    TutorialDataService.get(id)
+    AlunoDataService.get(id)
       .then(response => {
         setCurrentTutorial(response.data);
       })
@@ -42,7 +43,7 @@ const Aluno = (props) => {
       published: status
     };
 
-    dispatch(updateTutorial({ id: currentTutorial.id, data }))
+    dispatch(updateAluno({ id: currentTutorial.id, data }))
       .unwrap()
       .then(response => {
         console.log(response);
@@ -55,26 +56,58 @@ const Aluno = (props) => {
   };
 
   const updateContent = () => {
-    dispatch(updateTutorial({ id: currentTutorial.id, data: currentTutorial }))
+     
+    Swal.fire({
+      title: 'Vocë tem certeza que quer atualizar?',
+      showDenyButton: true,
+      showCancelButton: true,
+      confirmButtonText: 'Sim',
+      denyButtonText: `Nao`,
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        Swal.fire('Atualizado com sucesso!', '', 'success')
+        dispatch(updateAluno({ id: currentTutorial.id, data: currentTutorial }))
       .unwrap()
       .then(response => {
         console.log(response);
-        setMessage("The tutorial was updated successfully!");
+        setMessage("Aluno atualizado");
       })
       .catch(e => {
         console.log(e);
       });
+      } else if (result.isDenied) {
+        Swal.fire('Alteraçoes nao salva', '', 'info')
+      }
+    })
+    
   };
 
   const removeTutorial = () => {
-    dispatch(deleteTutorial({ id: currentTutorial.id }))
-      .unwrap()
-      .then(() => {
-        props.history.push("/tutorials");
-      })
-      .catch(e => {
-        console.log(e);
-      });
+    Swal.fire({
+      title: 'Vocë tem certeza que quer apagar o aluno?',
+      showDenyButton: true,
+      showCancelButton: true,
+      confirmButtonText: 'Sim',
+      denyButtonText: `Don't save`,
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        Swal.fire('Aluno deletado com sucesso!', '', 'success')
+        dispatch(deleteAluno({ id: currentTutorial.id }))
+        .unwrap()
+        .then(() => {
+          props.history.push("/alunos");
+        })
+        .catch(e => {
+          console.log(e);
+        });
+      } else if (result.isDenied) {
+        Swal.fire('Aluno nao deletado', '', 'info')
+       
+      }
+    })
+  
   };
 
   return (
@@ -114,7 +147,7 @@ const Aluno = (props) => {
             </div>
           </form>
 
-          {currentTutorial.published ? (
+          {/* {currentTutorial.published ? (
             <button
               className="badge badge-primary mr-2"
               onClick={() => updateStatus(false)}
@@ -128,18 +161,18 @@ const Aluno = (props) => {
             >
               Publish
             </button>
-          )}
+          )} */}
 
-          <button className="badge badge-danger mr-2" onClick={removeTutorial}>
-            Delete
+          <button className="m-3 btn btn-sm btn-danger"  onClick={removeTutorial}>
+            Deletar
           </button>
 
           <button
             type="submit"
-            className="badge badge-success"
+            className="m-3 btn btn-sm btn-success" 
             onClick={updateContent}
           >
-            Update
+            Atualizar
           </button>
           <p>{message}</p>
         </div>

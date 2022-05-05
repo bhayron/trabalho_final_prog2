@@ -60,17 +60,17 @@ const AlunosList = () => {
           <input
             type="text"
             className="form-control"
-            placeholder="Search by title"
+            placeholder="Pesquisar pelo nome"
             value={searchTitle}
             onChange={onChangeSearchTitle}
           />
           <div className="input-group-append">
             <button
-              className="btn btn-outline-secondary"
+              className="btn btn-success"
               type="button"
               onClick={findByTitle}
             >
-              Search
+              Pesquisar
             </button>
           </div>
         </div>
@@ -106,7 +106,7 @@ const AlunosList = () => {
       <div className="col-md-6">
         {currentTutorial ? (
           <div>
-            <h4>Tutorial</h4>
+            <h4>Aluno</h4>
             <div>
               <label>
                 <strong>Title:</strong>
@@ -127,16 +127,20 @@ const AlunosList = () => {
             </div>
 
             <Link
-              to={"/tutorials/" + currentTutorial.id}
-              className="badge badge-warning"
+              to={"/alunos/" + currentTutorial.id}
+              
             >
+                <button
+          className="m-3 btn btn-sm btn-warning"         
+        >
               Editar
+              </button>
             </Link>
           </div>
         ) : (
           <div>
             <br />
-            <p>Please click on a Tutorial...</p>
+            <p>Selecione um Aluno...</p>
           </div>
         )}
       </div>
