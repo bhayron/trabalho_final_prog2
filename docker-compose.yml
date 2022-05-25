@@ -12,10 +12,10 @@ services:
       - 3306:3306
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: secretf5
+      MYSQL_ROOT_PASSWORD: secretf
       MYSQL_DATABASE: prog
       MYSQL_USER: bhayron
-      MYSQL_PASSWORD: secretf5
+      MYSQL_PASSWORD: secretf
 
   phpmyadmin:
     image: phpmyadmin
