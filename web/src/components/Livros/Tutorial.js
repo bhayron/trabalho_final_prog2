@@ -146,7 +146,7 @@ const Tutorial = (props) => {
       ) : (
         <div>
           <br />
-          <p>Please click on a Tutorial...</p>
+          <p>Selecione um...</p>
         </div>
       )}
     </div>
