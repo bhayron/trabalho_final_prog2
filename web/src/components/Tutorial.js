@@ -106,12 +106,12 @@ const Tutorial = (props) => {
               />
             </div>
 
-            <div className="form-group">
+            {/* <div className="form-group">
               <label>
                 <strong>Status:</strong>
               </label>
               {currentTutorial.published ? "Published" : "Pending"}
-            </div>
+            </div> */}
           </form>
 
           {currentTutorial.published ? (

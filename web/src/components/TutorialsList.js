@@ -60,7 +60,7 @@ const TutorialsList = () => {
           <input
             type="text"
             className="form-control"
-            placeholder="Search by title"
+            placeholder="Pesquisar pelo titulo"
             value={searchTitle}
             onChange={onChangeSearchTitle}
           />
@@ -116,12 +116,12 @@ const TutorialsList = () => {
               </label>{" "}
               {currentTutorial.description}
             </div>
-            <div>
+            {/* <div>
               <label>
                 <strong>Status:</strong>
               </label>{" "}
               {currentTutorial.published ? "Published" : "Pending"}
-            </div>
+            </div> */}
 
             <Link
               to={"/tutorials/" + currentTutorial.id}

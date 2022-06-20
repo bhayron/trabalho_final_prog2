@@ -119,12 +119,12 @@ const AlunosList = () => {
               </label>{" "}
               {currentTutorial.curso}
             </div>
-            <div>
+            {/* <div>
               <label>
                 <strong>Status:</strong>
               </label>{" "}
               {currentTutorial.published ? "Published" : "Pending"}
-            </div>
+            </div> */}
 
             <Link
               to={"/alunos/" + currentTutorial.id}
