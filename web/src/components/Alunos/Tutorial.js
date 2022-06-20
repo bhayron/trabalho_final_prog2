@@ -58,7 +58,7 @@ const Aluno = (props) => {
   const updateContent = () => {
      
     Swal.fire({
-      title: 'Vocë tem certeza que quer atualizar?',
+      title: 'Você tem certeza que quer atualizar?',
       showDenyButton: true,
       showCancelButton: true,
       confirmButtonText: 'Sim',
@@ -85,7 +85,7 @@ const Aluno = (props) => {
 
   const removeTutorial = () => {
     Swal.fire({
-      title: 'Vocë tem certeza que quer apagar o aluno?',
+      title: 'Você tem certeza que quer apagar o aluno?',
       showDenyButton: true,
       showCancelButton: true,
       confirmButtonText: 'Sim',
