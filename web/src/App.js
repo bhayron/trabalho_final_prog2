@@ -15,41 +15,27 @@ function App() {
   return (
     <Router>
       <nav className="navbar navbar-expand navbar-dark bg-dark">
-        <a href="/tutorials" className="navbar-brand">
+        <a href="/alunos" className="navbar-brand">
           Inicio
         </a>
-        <div className="navbar-nav mr-auto">
-          <li className="nav-item">
-            <Link to={"/tutorials"} className="nav-link">
-              Agendamentos
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link to={"/add"} className="nav-link">
-              Adicionar
-            </Link>
-          </li>
+        <div className="navbar-nav mr-auto">        
+        
           <li className="nav-item">
             <Link to={"/alunos"} className="nav-link">
               Alunos
             </Link>
           </li>
-          <li className="nav-item">
-            <Link to={"/livros"} className="nav-link">
-              Livros
-            </Link>
-          </li>   
+          
         </div>              
       </nav>
 
       <div className="container mt-3">
         <Switch>
-          <Route exact path={["/", "/tutorials"]} component={TutorialsList} />
+          {/* <Route exact path={["/", "/tutorials"]} component={TutorialsList} /> */}
           <Route exact path="/add" component={AddTutorial} />
           <Route path="/tutorials/:id" component={Tutorial} />
 
-          <Route exact path="/alunos" component={AlunosList} />
-          <Route exact path="/livros" component={TutorialsList} />
+          <Route exact path={["/", "/alunos"]}component={AlunosList} />
 
           <Route exact path="/adicionar/aluno" component={AddAluno} />
           <Route path="/alunos/:id" component={Aluno} />
